@@ -1,30 +1,51 @@
-# HumberAI-ML
+# TV Show Aggregator
 
-This Lab checks whether a loan is affordable based on a 40% debt-to-income limit, for anyone estimating loan eligibility from their income and existing debt.
+This program downloads TV show records from the TVmaze API and summarizes them by genre, language and premiere decade, which is useful for spotting trends across a large catalog of shows without reading each one by hand.
+
+## Data source
+
+`https://api.tvmaze.com/shows?page=0` — each record is one TV show (name, genres, language, rating, network, premiere date, etc). The page returns 240 shows.
 
 ## Setup
 
     python3 -m venv .venv
     source .venv/bin/activate        # Windows: .venv\Scripts\activate
-
-No external packages are required; the script only uses the Python standard library.
+    pip install -r requirements.txt
 
 ## Run
 
-    python3 "Lab 01.py"
+    python3 records.py
 
-## Example
+## Example output
 
-    Enter loan amount ($1,000 - $1,000,000): 20000
-    Enter down payment ($0 - $20,000.00): 2000
-    Enter net monthly income ($500 - $100,000): 5000
-    Enter monthly debt ($0 - $5,000.00): 1200
+```json
+"shows_per_decade": {
+  "1980s": 2,
+  "1990s": 8,
+  "2000s": 51,
+  "2010s": 179
+},
+"average_rating_by_language": {
+  "English": 7.58,
+  "Japanese": 7.88
+}
+```
 
-    Amount to finance: $18,000.00
-    Remaining monthly debt capacity: $800.00
-    Debt-to-income ratio: 24.0%
-    Result: Approved: debt-to-income ratio is well within the 40% limit
+Most of the fetched shows premiered in the 2010s, and Japanese-language shows average slightly higher ratings than English-language ones in this sample.
+
+## Data quirks
+
+- **Multiple or missing genres**: a show can list several genres or none. `shows_per_genre` loops over each show's genre list, so a show contributes to every genre it has, and shows with an empty list simply add to no genre count rather than being forced into a fake category.
+- **Missing ratings**: some shows have no `rating.average`. Those shows are skipped in `average_rating_by_language` instead of being treated as a 0, which would have dragged averages down incorrectly.
+- **Missing/malformed premiere date**: a few shows have no `premiered` date. `shows_per_decade` skips any show without a usable four-digit year rather than lumping it into a decade it didn't provide.
+
+## Design choices
+
+- **dict** — used for every grouping aggregation (`shows_per_genre`, `average_rating_by_language`, `shows_per_decade`) because each groups values by a key that isn't known in advance.
+- **set** — used in `build_summary` to de-duplicate and sort the genre names into `distinct_genres`, since the dict keys alone don't guarantee an order to report them in.
+- **list** — used for the raw records returned by the API, which are iterated in each aggregation function.
 
 ## Known limitations
 
-Only two results are returned (Approved or Denied). Range limits (e.g. max loan of $1,000,000) are estimates and not tied to any real lending policy.
+- Only the first page of results (240 shows) is aggregated; paging through further pages would give a larger and more representative sample.
+- Genre names are used as they appear in the API, so near-duplicate spellings (if any) are not merged.
