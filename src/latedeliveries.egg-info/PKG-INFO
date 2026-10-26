@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: latedeliveries
+Version: 0.1.0
+Summary: Predict late food-delivery orders for QuickBite (AIGC 5005 Lab 05).
+Requires-Python: >=3.11
+Requires-Dist: scikit-learn
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: joblib

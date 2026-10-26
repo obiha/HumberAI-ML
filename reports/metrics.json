@@ -1,0 +1,110 @@
+{
+  "threshold": 0.6,
+  "cost_table": [
+    {
+      "threshold": 0.05,
+      "cost": 9000.0
+    },
+    {
+      "threshold": 0.1,
+      "cost": 8996.0
+    },
+    {
+      "threshold": 0.15,
+      "cost": 8828.0
+    },
+    {
+      "threshold": 0.2,
+      "cost": 8433.0
+    },
+    {
+      "threshold": 0.25,
+      "cost": 7662.0
+    },
+    {
+      "threshold": 0.3,
+      "cost": 6897.0
+    },
+    {
+      "threshold": 0.35,
+      "cost": 6180.0
+    },
+    {
+      "threshold": 0.4,
+      "cost": 5414.0
+    },
+    {
+      "threshold": 0.45,
+      "cost": 4889.0
+    },
+    {
+      "threshold": 0.5,
+      "cost": 4539.0
+    },
+    {
+      "threshold": 0.55,
+      "cost": 4275.0
+    },
+    {
+      "threshold": 0.6,
+      "cost": 4152.0
+    },
+    {
+      "threshold": 0.65,
+      "cost": 4203.0
+    },
+    {
+      "threshold": 0.7,
+      "cost": 4247.0
+    },
+    {
+      "threshold": 0.75,
+      "cost": 4474.0
+    },
+    {
+      "threshold": 0.8,
+      "cost": 4695.0
+    },
+    {
+      "threshold": 0.85,
+      "cost": 4855.0
+    },
+    {
+      "threshold": 0.9,
+      "cost": 5053.0
+    },
+    {
+      "threshold": 0.95,
+      "cost": 5188.0
+    }
+  ],
+  "test_metrics": {
+    "confusion_matrix": [
+      [
+        564,
+        69
+      ],
+      [
+        67,
+        50
+      ]
+    ],
+    "precision": 0.42016806722689076,
+    "recall": 0.42735042735042733,
+    "f1": 0.423728813559322,
+    "roc_auc": 0.7519477187723632
+  },
+  "policy_costs": {
+    "flag_nobody": 1755.0,
+    "flag_everybody": 3000.0,
+    "model": 1481.0
+  },
+  "best_params": {
+    "model__C": 0.01,
+    "model__solver": "liblinear"
+  },
+  "best_cv_roc_auc": 0.7889201390819574,
+  "untuned_cv_roc_auc_mean": 0.7881335073348017,
+  "untuned_cv_roc_auc_std": 0.0367880471328682,
+  "chosen_model": "logistic_regression_balanced"
+}
